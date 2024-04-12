@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:27:36 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/11 17:00:20 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/12 08:12:36 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,24 @@
 #define AC_BOLD "\033[1m"
 #define AC_ITALIC "\033[3m"
 
+#define ERR_MSG_ONE(str) std::cerr << AC_RED << "Nonsensical conversion: " << str << AC_NORMAL << std::endl
+
 enum e_literals
 {
 	CHAR,
 	INT,
 	FLOAT,
 	DOUBLE,
-	INVALID = -1
+	INF,
+	INVALID = -1,
+	NONE = -2
 };
 
 #include <iostream>
 #include <string>
-#include <sstream>
+#include <cstdlib> // strtod
+#include <cmath> // std::isinf
+//#include <limits> // std::numeric_limit
 
 // must not be instantiable
 class ScalarConverter
