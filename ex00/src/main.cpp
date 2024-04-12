@@ -6,13 +6,14 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:43:21 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/12 10:54:48 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:19:45 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 
 // Except for char parameters, only the decimal notation will be used
+// Scientific notation is a way of expressing numbers that are too large or too small to be conveniently written in decimal form
 int main(int argc, char **argv)
 {
 	if (argc != 2)

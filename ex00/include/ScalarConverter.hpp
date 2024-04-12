@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:27:36 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/12 08:12:36 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:28:42 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define AC_BOLD "\033[1m"
 #define AC_ITALIC "\033[3m"
 
-#define ERR_MSG_ONE(str) std::cerr << AC_RED << "Nonsensical conversion: " << str << AC_NORMAL << std::endl
+#define INVALID_CONVERSION(str) std::cerr << AC_RED << "Nonsensical conversion: " << str << AC_NORMAL << std::endl
 
 enum e_literals
 {
@@ -34,14 +34,14 @@ enum e_literals
 	FLOAT,
 	DOUBLE,
 	INF,
-	INVALID = -1,
-	NONE = -2
+	NN,
+	NONE = -1
 };
 
 #include <iostream>
 #include <string>
 #include <cstdlib> // strtod
-#include <cmath> // std::isinf
+#include <cmath> // std::isinf, std::isnan
 //#include <limits> // std::numeric_limit
 
 // must not be instantiable

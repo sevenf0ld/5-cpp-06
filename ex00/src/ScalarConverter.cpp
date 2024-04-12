@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/12 11:00:09 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/12 16:41:42 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,71 +31,65 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
-e_literals determine_infinite_type(std::string input, double val)
+void handle_numeric_limits(std::string input, double val)
 {
-	if (input == "-inff" || input == "+inff" || input == "inff")
-	{
-		std::cout << "char		: impossible" << std::endl
-				  << "int		: impossible" << std::endl
-				  << "float		: " << (input[0] == 43 ? "inff" : input) << std::endl
-				  << "double		: " << val << std::endl;
-		return (FLOAT);
-	}
+	// float_val is to not print the leading positive sign
+	std::string float_val(input[0] == 43 ? "inff" : input);
+
+	std::cout << "char		: impossible" << std::endl
+			   << "int		: impossible" << std::endl;
+
 	if (input == "-inf" || input == "+inf" || input == "inf")
-	{
-		std::cout << "char		: impossible" << std::endl
-				  << "int		: impossible" << std::endl
-				  << "float		: " << (input[0] == 43 ? "inf" : input) << std::endl
-				  << "double		: " << val << std::endl;
-		return (DOUBLE);
-	}
-	return (NONE);
-}
-
-e_literals detect_finite_type(std::string input, double val)
-{
-	if (input == "-nanf" || input == "+nanf" || input == "nanf")
-	{
-		std::cout << "char		: impossible" << std::endl
-				  << "int		: impossible" << std::endl
-				  << "float		: " << (input[0] == 43 ? "nanf" : input) << std::endl
-				  << "double		: " << val << std::endl;
-		return (FLOAT);
-	}
-	if (input == "-nan" || input == "+nan" || input == "nan")
-	{
-		std::cout << "char		: impossible" << std::endl
-				  << "int		: impossible" << std::endl
-				  << "float		: " << val << "f" << std::endl
-				  << "double		: " << val << std::endl;
-		return (DOUBLE);
-	}
-
-	if (input.length() == 1)
-	{
-		char a;
-		a = static_cast<char>(val);
-		int i;
-		i = static_cast<int>(val);
-		std::cout << "char		: " << a << std::endl
-				  << "int		: " << i << std::endl
-				  << "float		: " << static_cast<float>(i) << std::endl
-				  << "double		: " << static_cast<double>(i) << std::endl;
-	}
+		std::cout << "float		: " << (float_val == input ? input + "f" : float_val) << std::endl;
 	else
+		std::cout << "float		: " << float_val << std::endl;
+
+	std::cout << "double		: " << val << std::endl;
+}
+
+e_literals handle_special_values(std::string input, double val)
+{
+	std::cout << "char		: impossible" << std::endl
+			  << "int		: impossible" << std::endl;
+	if (input[input.length() - 1] == 'f')
+		std::cout << "float		: " << (input[0] == 43 ? "nanf" : input) << std::endl;
+	else
+		std::cout << "float		: " << val << "f" << std::endl;
+	std::cout << "double		: " << val << std::endl;
+	return (NN);
+}
+
+e_literals handle_finite(std::string input, double val)
+{
+	if (input.length() == 1 && std::isprint(input[0]))
 	{
-		int i;
-		i = static_cast<int>(val);
-		(void) i;
+		if (!std::isdigit(input[0]))
+			return (CHAR);
+		else
+			return (INT);
 	}
+	if (input[input.length() - 1] != 'f')
+		return (FLOAT);
+	else
+		return (DOUBLE);
+	(void) val;
 	return (NONE);
 }
 
-e_literals detect_type(std::string input, double val)
+e_literals determine_input(std::string input, double val)
+{
+	if (std::isnan(val))
+		return (handle_special_values(input, val));
+	else if (std::isfinite(val))
+		return (handle_finite(input, val));
+	return (NONE);
+}
+
+void detect_type(std::string input, double val)
 {
 	if (std::isinf(val))
-		return (determine_infinite_type(input, val));
-	return (detect_finite_type(input, val));
+		handle_numeric_limits(input, val);
+	determine_input(input, val);
 }
 
 /*
@@ -139,20 +133,21 @@ void ScalarConverter::convert(std::string input)
 
 	if (input == endptr)
 	{
-		if (input.length() == 1 && std::isprint(input[0]))
-		{
-			char a;
-			a = static_cast<char>(input[0]);
-			int i;
-			i = static_cast<int>(input[0]);
-			std::cout << "char		: " << a << std::endl
-					  << "int		: " << i << std::endl
-					  << "float		: " << static_cast<float>(i) << std::endl
-					  << "double		: " << static_cast<double>(i) << std::endl;
-		}
+		// check for invalid floating point number (leading non-digits)
+		if (input.length() != 1)
+			INVALID_CONVERSION(endptr);
+		// allow single characters
 		else
-			ERR_MSG_ONE(endptr);
+			detect_type(input, res);
 	}
 	else
-		detect_type(input, res);
+	{
+		// check for invalid floating point number (trailing non-digits)
+		// c++11 allows input.back()
+		if (endptr != NULL && std::string(endptr).length() != 0 && input[input.length() - 1] != 'f')
+			INVALID_CONVERSION(endptr);
+		// allow float-representation
+		else
+			detect_type(input, res);
+	}
 }
