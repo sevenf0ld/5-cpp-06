@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/15 13:08:58 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:11:28 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,88 @@ e_literals handle_finite(std::string input)
 	return (NONE);
 }
 
+void handle_char(std::string input, double val)
+{
+	char a;
+
+	a = input[0];
+	std::cout << "char		: " << a << std::endl
+			  << "int		: " << static_cast<int>(a) << std::endl
+			  << "float		: " << static_cast<float>(a) << ".0f" << std::endl
+			  << "double		: " << static_cast<double>(a) << ".0" << std::endl;
+	(void) val;
+}
+
+void handle_int(std::string input, double val)
+{
+	int i;
+	char a;
+
+	i = val;
+	a = static_cast<char>(i);
+	//std::cout << "char		: " << (std::isprint(a) ? (void)a : NONDISPLAYABLE()) << std::endl
+	if (std::isprint(a))
+		std::cout << "char		: " << std::endl;
+	else
+		NONDISPLAYABLE();
+	std::cout << "int		: " << i << std::endl
+			  << "float		: " << static_cast<float>(i) << ".0f" << std::endl
+			  << "double		: " << static_cast<double>(i) << ".0" << std::endl;
+	(void) input;
+}
+
+void handle_float(std::string input, double val)
+{
+	float i;
+	char a;
+	std::size_t found;
+
+	i = val;
+	a = static_cast<char>(i);
+	found = input.find('.');
+	if (std::isprint(a))
+		std::cout << "char		: " << a << std::endl;
+	else
+		NONDISPLAYABLE();
+	std::cout << "int		: " << static_cast<int>(i) << std::endl;
+	if (found != std::string::npos)
+	{
+		std::cout << "float		: " << i << ".0f" << std::endl
+				  << "double		: " << static_cast<double>(i) << ".0" << std::endl;
+	}
+	else
+	{
+		std::cout << "float		: " << i << "f" << std::endl
+				  << "double		: " << static_cast<double>(i) << std::endl;
+	}
+	(void) input;
+}
+
+void handle_double(std::string input, double val)
+{
+	char a;
+	std::size_t found;
+
+	a = static_cast<char>(val);
+	found = input.find('.');
+	if (std::isprint(a))
+		std::cout << "char		: " << a << std::endl;
+	else
+		NONDISPLAYABLE();
+	std::cout << "int		: " << static_cast<int>(val) << std::endl;
+	if (found != std::string::npos)
+	{
+		std::cout << "float		: " << static_cast<float>(val) << ".0f" << std::endl
+				  << "double		: " << val << ".0" << std::endl;
+	}
+	else
+	{
+		std::cout << "float		: " << static_cast<float>(val) << "f" << std::endl
+				  << "double		: " << val << std::endl;
+	}
+	(void) input;
+}
+
 //e_literals determine_input(std::string input, double val)
 void determine_input(std::string input, double val)
 {
@@ -96,15 +178,19 @@ void determine_input(std::string input, double val)
 		{
 		case CHAR:
 			std::cout << "		CHAR" << std::endl;
+			handle_char(input, val);
 			break ;
 		case INT:
 			std::cout << "		INT" << std::endl;
+			handle_int(input, val);
 			break ;
 		case FLOAT:
 			std::cout << "		FLOAT" << std::endl;
+			handle_float(input, val);
 			break ;
 		case DOUBLE:
 			std::cout << "		DOUBLE" << std::endl;
+			handle_double(input, val);
 			break;
 		default:
 			std::cout << "		NOTHING" << std::endl;

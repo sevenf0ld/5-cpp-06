@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:27:36 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/15 13:13:54 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:00:55 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define AC_ITALIC "\033[3m"
 
 #define INVALID_CONVERSION(str) std::cerr << AC_RED << "Nonsensical conversion: " << str << AC_NORMAL << std::endl
+#define NONDISPLAYABLE() std::cerr << AC_RED << "char		: Nondisplay character " << AC_NORMAL << std::endl
 
 enum e_literals
 {
