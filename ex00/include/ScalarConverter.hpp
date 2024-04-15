@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:27:36 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/12 16:28:42 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:13:54 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ enum e_literals
 	INT,
 	FLOAT,
 	DOUBLE,
-	INF,
-	NN,
+	//INF,
+	//NN,
 	NONE = -1
 };
 

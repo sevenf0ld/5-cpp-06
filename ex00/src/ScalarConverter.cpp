@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/12 16:41:42 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/15 13:08:58 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void handle_numeric_limits(std::string input, double val)
 	std::cout << "double		: " << val << std::endl;
 }
 
-e_literals handle_special_values(std::string input, double val)
+//e_literals handle_special_values(std::string input, double val)
+void handle_special_values(std::string input, double val)
 {
 	std::cout << "char		: impossible" << std::endl
 			  << "int		: impossible" << std::endl;
@@ -56,11 +57,15 @@ e_literals handle_special_values(std::string input, double val)
 	else
 		std::cout << "float		: " << val << "f" << std::endl;
 	std::cout << "double		: " << val << std::endl;
-	return (NN);
+	//return (NN);
 }
 
-e_literals handle_finite(std::string input, double val)
+e_literals handle_finite(std::string input)
 {
+	std::size_t found;
+
+	// returns size_t of npos (last element) in the string if not found
+	found = input.find('.');
 	if (input.length() == 1 && std::isprint(input[0]))
 	{
 		if (!std::isdigit(input[0]))
@@ -68,21 +73,45 @@ e_literals handle_finite(std::string input, double val)
 		else
 			return (INT);
 	}
-	if (input[input.length() - 1] != 'f')
+	if (input[input.length() - 1] == 'f')
 		return (FLOAT);
+	else if (found == std::string::npos)
+		return (INT);
 	else
 		return (DOUBLE);
-	(void) val;
 	return (NONE);
 }
 
-e_literals determine_input(std::string input, double val)
+//e_literals determine_input(std::string input, double val)
+void determine_input(std::string input, double val)
 {
 	if (std::isnan(val))
-		return (handle_special_values(input, val));
+		//return (handle_special_values(input, val));
+		handle_special_values(input, val);
 	else if (std::isfinite(val))
-		return (handle_finite(input, val));
-	return (NONE);
+	{
+		//const char *types[4] = {"CHAR", "INT", "FLOAT", "DOUBLE"};
+		//std::cout << types[handle_finite(input)] << std::endl;
+		switch (handle_finite(input))
+		{
+		case CHAR:
+			std::cout << "		CHAR" << std::endl;
+			break ;
+		case INT:
+			std::cout << "		INT" << std::endl;
+			break ;
+		case FLOAT:
+			std::cout << "		FLOAT" << std::endl;
+			break ;
+		case DOUBLE:
+			std::cout << "		DOUBLE" << std::endl;
+			break;
+		default:
+			std::cout << "		NOTHING" << std::endl;
+		}
+		//return (handle_finite(input));
+	}
+	//return (NONE);
 }
 
 void detect_type(std::string input, double val)
