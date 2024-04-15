@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/15 15:11:28 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:53:34 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ e_literals handle_finite(std::string input)
 	return (NONE);
 }
 
-void handle_char(std::string input, double val)
+void handle_char(std::string input)
 {
 	char a;
 
@@ -91,34 +91,42 @@ void handle_char(std::string input, double val)
 			  << "int		: " << static_cast<int>(a) << std::endl
 			  << "float		: " << static_cast<float>(a) << ".0f" << std::endl
 			  << "double		: " << static_cast<double>(a) << ".0" << std::endl;
-	(void) val;
 }
 
-void handle_int(std::string input, double val)
+void handle_int(std::string input)
 {
 	int i;
+	//long long j;
+	int64_t j;
 	char a;
 
-	i = val;
+	//i = strtoi(input);
+	i = strtol(input.c_str(), NULL, 10);
+	j = strtol(input.c_str(), NULL, 10);
 	a = static_cast<char>(i);
-	//std::cout << "char		: " << (std::isprint(a) ? (void)a : NONDISPLAYABLE()) << std::endl
 	if (std::isprint(a))
 		std::cout << "char		: " << std::endl;
 	else
 		NONDISPLAYABLE();
-	std::cout << "int		: " << i << std::endl
-			  << "float		: " << static_cast<float>(i) << ".0f" << std::endl
+	if (j >= INT_MAX || j <= INT_MIN)
+		OVERFLOW();
+	else
+		std::cout << "int		: " << i << std::endl;
+	std::cout << "float		: " << static_cast<float>(i) << ".0f" << std::endl
 			  << "double		: " << static_cast<double>(i) << ".0" << std::endl;
-	(void) input;
+
+	float k = static_cast<float>(i);
+	if (k > flt::max())
+		std::cout << "MAX" << std::endl;
 }
 
-void handle_float(std::string input, double val)
+void handle_float(std::string input)
 {
 	float i;
 	char a;
 	std::size_t found;
 
-	i = val;
+	i = strtof(input.c_str(), NULL);
 	a = static_cast<char>(i);
 	found = input.find('.');
 	if (std::isprint(a))
@@ -136,30 +144,31 @@ void handle_float(std::string input, double val)
 		std::cout << "float		: " << i << "f" << std::endl
 				  << "double		: " << static_cast<double>(i) << std::endl;
 	}
-	(void) input;
 }
 
-void handle_double(std::string input, double val)
+void handle_double(std::string input)
 {
+	double i;
 	char a;
 	std::size_t found;
 
-	a = static_cast<char>(val);
+	i = strtod(input.c_str(), NULL);
+	a = static_cast<char>(i);
 	found = input.find('.');
 	if (std::isprint(a))
 		std::cout << "char		: " << a << std::endl;
 	else
 		NONDISPLAYABLE();
-	std::cout << "int		: " << static_cast<int>(val) << std::endl;
+	std::cout << "int		: " << static_cast<int>(i) << std::endl;
 	if (found != std::string::npos)
 	{
-		std::cout << "float		: " << static_cast<float>(val) << ".0f" << std::endl
-				  << "double		: " << val << ".0" << std::endl;
+		std::cout << "float		: " << static_cast<float>(i) << ".0f" << std::endl
+				  << "double		: " << i << ".0" << std::endl;
 	}
 	else
 	{
-		std::cout << "float		: " << static_cast<float>(val) << "f" << std::endl
-				  << "double		: " << val << std::endl;
+		std::cout << "float		: " << static_cast<float>(i) << "f" << std::endl
+				  << "double		: " << i << std::endl;
 	}
 	(void) input;
 }
@@ -178,19 +187,19 @@ void determine_input(std::string input, double val)
 		{
 		case CHAR:
 			std::cout << "		CHAR" << std::endl;
-			handle_char(input, val);
+			handle_char(input);
 			break ;
 		case INT:
 			std::cout << "		INT" << std::endl;
-			handle_int(input, val);
+			handle_int(input);
 			break ;
 		case FLOAT:
 			std::cout << "		FLOAT" << std::endl;
-			handle_float(input, val);
+			handle_float(input);
 			break ;
 		case DOUBLE:
 			std::cout << "		DOUBLE" << std::endl;
-			handle_double(input, val);
+			handle_double(input);
 			break;
 		default:
 			std::cout << "		NOTHING" << std::endl;
