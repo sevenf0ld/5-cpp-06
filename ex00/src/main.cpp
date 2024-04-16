@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:43:21 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/12 14:19:45 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:27:20 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,6 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	ScalarConverter::convert(argv[1]);
+
+	// ScalarConverter test;
 }
