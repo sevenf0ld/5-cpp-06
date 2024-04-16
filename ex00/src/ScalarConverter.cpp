@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/15 15:53:34 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/16 10:22:36 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,27 +97,23 @@ void handle_int(std::string input)
 {
 	int i;
 	//long long j;
+	// https://stackoverflow.com/a/4018265
 	int64_t j;
 	char a;
 
-	//i = strtoi(input);
 	i = strtol(input.c_str(), NULL, 10);
 	j = strtol(input.c_str(), NULL, 10);
 	a = static_cast<char>(i);
 	if (std::isprint(a))
-		std::cout << "char		: " << std::endl;
+		std::cout << "char		: " << a << std::endl;
 	else
 		NONDISPLAYABLE();
-	if (j >= INT_MAX || j <= INT_MIN)
+	if (j > INT_MAX || j < INT_MIN)
 		OVERFLOW();
 	else
 		std::cout << "int		: " << i << std::endl;
 	std::cout << "float		: " << static_cast<float>(i) << ".0f" << std::endl
 			  << "double		: " << static_cast<double>(i) << ".0" << std::endl;
-
-	float k = static_cast<float>(i);
-	if (k > flt::max())
-		std::cout << "MAX" << std::endl;
 }
 
 void handle_float(std::string input)
@@ -125,24 +121,40 @@ void handle_float(std::string input)
 	float i;
 	char a;
 	std::size_t found;
+	std::string suffix_f;
+	std::string suffix_d;
+	std::ostringstream i_oss;
+	std::string f_input;
 
 	i = strtof(input.c_str(), NULL);
 	a = static_cast<char>(i);
 	found = input.find('.');
+	i_oss << i;
+	f_input = i_oss.str();
 	if (std::isprint(a))
 		std::cout << "char		: " << a << std::endl;
 	else
 		NONDISPLAYABLE();
 	std::cout << "int		: " << static_cast<int>(i) << std::endl;
-	if (found != std::string::npos)
+	if (found == std::string::npos)
 	{
 		std::cout << "float		: " << i << ".0f" << std::endl
 				  << "double		: " << static_cast<double>(i) << ".0" << std::endl;
 	}
 	else
 	{
-		std::cout << "float		: " << i << "f" << std::endl
-				  << "double		: " << static_cast<double>(i) << std::endl;
+		found = f_input.find('.');
+		//if (input[input.length() - 2] == '0' && found != std::string::npos)
+		//	suffix = "0f";
+		if (input[input.length() - 2] == '0' && found == std::string::npos)
+		{
+			suffix_f = ".0f";
+			suffix_d = ".0";
+		}
+		else
+			suffix_f = "f";
+		std::cout << "float		: " << i << suffix_f << std::endl
+				  << "double		: " << static_cast<double>(i) << suffix_d << std::endl;
 	}
 }
 
@@ -151,24 +163,46 @@ void handle_double(std::string input)
 	double i;
 	char a;
 	std::size_t found;
+	std::string suffix_f;
+	std::string suffix_d;
+	std::ostringstream i_oss;
+	std::string d_input;
 
 	i = strtod(input.c_str(), NULL);
 	a = static_cast<char>(i);
 	found = input.find('.');
+	i_oss << i;
+	d_input = i_oss.str();
 	if (std::isprint(a))
 		std::cout << "char		: " << a << std::endl;
 	else
 		NONDISPLAYABLE();
 	std::cout << "int		: " << static_cast<int>(i) << std::endl;
-	if (found != std::string::npos)
+	if (found == std::string::npos)
 	{
 		std::cout << "float		: " << static_cast<float>(i) << ".0f" << std::endl
 				  << "double		: " << i << ".0" << std::endl;
 	}
 	else
 	{
-		std::cout << "float		: " << static_cast<float>(i) << "f" << std::endl
-				  << "double		: " << i << std::endl;
+		// check if the last character is '0'
+		// use sstream to convert double back to string or check the arg
+		// https://stackoverflow.com/a/332132
+		// check the arg but this breaks 3.30
+		//if (input[input.length() - 1] == '0')
+			//suffix = ".0f";
+		found = d_input.find('.');
+		//if (input[input.length() - 1] == '0' && found != std::string::npos)
+		//	suffix = "0f";
+		if (input[input.length() - 1] == '0' && found == std::string::npos)
+		{
+			suffix_f = ".0f";
+			suffix_d = ".0";
+		}
+		else
+			suffix_f = "f";
+		std::cout << "float		: " << static_cast<float>(i) << suffix_f << std::endl
+				  << "double		: " << i << suffix_d << std::endl;
 	}
 	(void) input;
 }
@@ -249,10 +283,12 @@ void detect_type(std::string input, double val)
  */
 void ScalarConverter::convert(std::string input)
 {
+	size_t found;
 	const char *c_input = input.c_str();
 	char *endptr;
 	double res;
 
+	found = input.find('e');
 	res = strtod(c_input, &endptr);
 
 	if (input == endptr)
@@ -270,6 +306,8 @@ void ScalarConverter::convert(std::string input)
 		// c++11 allows input.back()
 		if (endptr != NULL && std::string(endptr).length() != 0 && input[input.length() - 1] != 'f')
 			INVALID_CONVERSION(endptr);
+		else if (found != std::string::npos)
+			REJECT_INPUT();
 		// allow float-representation
 		else
 			detect_type(input, res);
