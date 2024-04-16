@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/16 10:22:36 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:51:47 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ ScalarConverter::ScalarConverter()
 
 ScalarConverter::ScalarConverter(const ScalarConverter &rhs)
 {
-	(void) rhs;
+	(void)rhs;
 }
 
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter &rhs)
 {
-	(void) rhs;
+	(void)rhs;
 	return (*this);
 }
 
@@ -33,11 +33,11 @@ ScalarConverter::~ScalarConverter()
 
 void handle_numeric_limits(std::string input, double val)
 {
-	// float_val is to not print the leading positive sign
+	// not print the leading positive sign
 	std::string float_val(input[0] == 43 ? "inff" : input);
 
 	std::cout << "char		: impossible" << std::endl
-			   << "int		: impossible" << std::endl;
+			  << "int		: impossible" << std::endl;
 
 	if (input == "-inf" || input == "+inf" || input == "inf")
 		std::cout << "float		: " << (float_val == input ? input + "f" : float_val) << std::endl;
@@ -47,7 +47,6 @@ void handle_numeric_limits(std::string input, double val)
 	std::cout << "double		: " << val << std::endl;
 }
 
-//e_literals handle_special_values(std::string input, double val)
 void handle_special_values(std::string input, double val)
 {
 	std::cout << "char		: impossible" << std::endl
@@ -57,14 +56,12 @@ void handle_special_values(std::string input, double val)
 	else
 		std::cout << "float		: " << val << "f" << std::endl;
 	std::cout << "double		: " << val << std::endl;
-	//return (NN);
 }
 
 e_literals handle_finite(std::string input)
 {
 	std::size_t found;
 
-	// returns size_t of npos (last element) in the string if not found
 	found = input.find('.');
 	if (input.length() == 1 && std::isprint(input[0]))
 	{
@@ -75,6 +72,7 @@ e_literals handle_finite(std::string input)
 	}
 	if (input[input.length() - 1] == 'f')
 		return (FLOAT);
+	// returns size_t of npos (last element) in the string if not found
 	else if (found == std::string::npos)
 		return (INT);
 	else
@@ -96,9 +94,9 @@ void handle_char(std::string input)
 void handle_int(std::string input)
 {
 	int i;
-	//long long j;
-	// https://stackoverflow.com/a/4018265
-	int64_t j;
+	// -pedantic turns off the extension for long long which is not supported by c++98
+	// long long j;
+	int64_t j; // for portability
 	char a;
 
 	i = strtol(input.c_str(), NULL, 10);
@@ -144,7 +142,7 @@ void handle_float(std::string input)
 	else
 	{
 		found = f_input.find('.');
-		//if (input[input.length() - 2] == '0' && found != std::string::npos)
+		// if (input[input.length() - 2] == '0' && found != std::string::npos)
 		//	suffix = "0f";
 		if (input[input.length() - 2] == '0' && found == std::string::npos)
 		{
@@ -187,12 +185,11 @@ void handle_double(std::string input)
 	{
 		// check if the last character is '0'
 		// use sstream to convert double back to string or check the arg
-		// https://stackoverflow.com/a/332132
 		// check the arg but this breaks 3.30
-		//if (input[input.length() - 1] == '0')
-			//suffix = ".0f";
+		// if (input[input.length() - 1] == '0')
+		// suffix = ".0f";
 		found = d_input.find('.');
-		//if (input[input.length() - 1] == '0' && found != std::string::npos)
+		// if (input[input.length() - 1] == '0' && found != std::string::npos)
 		//	suffix = "0f";
 		if (input[input.length() - 1] == '0' && found == std::string::npos)
 		{
@@ -204,43 +201,33 @@ void handle_double(std::string input)
 		std::cout << "float		: " << static_cast<float>(i) << suffix_f << std::endl
 				  << "double		: " << i << suffix_d << std::endl;
 	}
-	(void) input;
+	(void)input;
 }
 
-//e_literals determine_input(std::string input, double val)
 void determine_input(std::string input, double val)
 {
 	if (std::isnan(val))
-		//return (handle_special_values(input, val));
 		handle_special_values(input, val);
 	else if (std::isfinite(val))
 	{
-		//const char *types[4] = {"CHAR", "INT", "FLOAT", "DOUBLE"};
-		//std::cout << types[handle_finite(input)] << std::endl;
 		switch (handle_finite(input))
 		{
 		case CHAR:
-			std::cout << "		CHAR" << std::endl;
 			handle_char(input);
-			break ;
+			break;
 		case INT:
-			std::cout << "		INT" << std::endl;
 			handle_int(input);
-			break ;
+			break;
 		case FLOAT:
-			std::cout << "		FLOAT" << std::endl;
 			handle_float(input);
-			break ;
+			break;
 		case DOUBLE:
-			std::cout << "		DOUBLE" << std::endl;
 			handle_double(input);
 			break;
 		default:
-			std::cout << "		NOTHING" << std::endl;
+			break;
 		}
-		//return (handle_finite(input));
 	}
-	//return (NONE);
 }
 
 void detect_type(std::string input, double val)
@@ -291,9 +278,10 @@ void ScalarConverter::convert(std::string input)
 	found = input.find('e');
 	res = strtod(c_input, &endptr);
 
+	// A pointer to the rest of the string after the last valid character is stored in the object pointed by endptr.
 	if (input == endptr)
 	{
-		// check for invalid floating point number (leading non-digits)
+		// check for leading non-digits
 		if (input.length() != 1)
 			INVALID_CONVERSION(endptr);
 		// allow single characters
@@ -302,7 +290,7 @@ void ScalarConverter::convert(std::string input)
 	}
 	else
 	{
-		// check for invalid floating point number (trailing non-digits)
+		// check for trailing non-digits
 		// c++11 allows input.back()
 		if (endptr != NULL && std::string(endptr).length() != 0 && input[input.length() - 1] != 'f')
 			INVALID_CONVERSION(endptr);

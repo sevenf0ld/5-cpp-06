@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:27:36 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/16 09:42:18 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:15:25 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #define AC_ITALIC "\033[3m"
 
 #define INVALID_CONVERSION(str) std::cerr << AC_RED << "Invalid conversion: " << str << AC_NORMAL << std::endl
-#define NONDISPLAYABLE() std::cerr << AC_RED << "char		: Nondisplay character" << AC_NORMAL << std::endl
+#define NONDISPLAYABLE() std::cerr << AC_RED << "char		: Nondisplayable character" << AC_NORMAL << std::endl
 #define OVERFLOW() std::cerr << AC_RED << "int		: Integer overflow" << AC_NORMAL << std::endl
 #define REJECT_INPUT() std::cerr << AC_RED << "Only decimal notation supported. Scientific notation is not supported." << AC_NORMAL << std::endl
 
@@ -36,21 +36,19 @@ enum e_literals
 	INT,
 	FLOAT,
 	DOUBLE,
-	//INF,
-	//NN,
 	NONE = -1
 };
 
 #include <iostream>
 #include <string>
 #include <cstdlib> // strtod
-#include <cmath> // std::isinf, std::isnan
-#include <limits> // std::numeric_limit
+#include <cmath>   // std::isinf, std::isnan
+#include <limits>  // std::numeric_limit
 #include <climits>
 #include <sstream>
 
-typedef std::numeric_limits<double> dbl; 
-typedef std::numeric_limits<float> flt; 
+typedef std::numeric_limits<double> dbl;
+typedef std::numeric_limits<float> flt;
 
 // must not be instantiable
 class ScalarConverter
