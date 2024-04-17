@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:02:49 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/16 16:10:59 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:10:03 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 #define AC_BOLD "\033[1m"
 #define AC_ITALIC "\033[3m"
 
-#include "Serialize.hpp"
+#include <string>
+#include <iostream>
+// #include <cstdint> // c++11
+#include <stdint.h>
 
 typedef struct Data
 {
@@ -33,5 +36,7 @@ typedef struct Data
 	std::string region;
 	std::string country;
 } Data;
+
+#include "Serializer.hpp"
 
 #endif

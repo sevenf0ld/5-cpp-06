@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:01:08 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/16 16:13:41 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:20:59 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
+// not instantiable
 class Serializer
 {
 public:
