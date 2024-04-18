@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:25:35 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/18 19:05:20 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:13:56 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 #define IDENTIFICATION(str) std::cout << AC_BOLD << AC_ITALIC << str << AC_NORMAL << std::endl
 #define NEW_ERR(x) std::cerr << AC_RED << "Failed to instantiate " << x << "." << AC_NORMAL << std::endl
+#define FORMAT_COPY_CONTROL(str) std::cout << AC_YELLOW << str << AC_NORMAL << std::endl
 
 #include <iostream>
 #include <cstdlib>

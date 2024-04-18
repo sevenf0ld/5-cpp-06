@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   A.hpp                                              :+:      :+:    :+:   */
+/*   C.cpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 12:27:16 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/17 12:28:12 by maiman-m         ###   ########.fr       */
+/*   Created: 2024/04/18 19:15:18 by maiman-m          #+#    #+#             */
+/*   Updated: 2024/04/18 19:15:43 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "zero_two.h"
 
-#ifndef A_HPP
-#define A_HPP
-
-class A : public Base
+C::~C()
 {
-public:
-    ~A();
-};
-
-#endif
+	FORMAT_COPY_CONTROL("C dtor called.");
+}

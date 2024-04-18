@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:33:23 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/18 19:00:40 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:17:22 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 Base::~Base()
 {
+	FORMAT_COPY_CONTROL("Base dtor called.");
 }
 
 // indirection through a ref or ptr of base type to refer to derived type is allowed
@@ -91,10 +92,7 @@ void identify(Base *p)
 
 // prints the actual type of 'p'
 // throw std::bad_cast in the case of a reference
-
-// error: ‘bad_cast’ in namespace ‘std’ does not name a type
 // class bad_cast : public std::exception;
-// <typeinfo> is forbidden
 void identify(Base &p)
 {
 	IDENTIFICATION("REFERENCE IDENTIFICATION");
