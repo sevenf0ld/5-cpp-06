@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:27:36 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/16 14:15:25 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:37:44 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ enum e_literals
 #include <cstdlib> // strtod
 #include <cmath>   // std::isinf, std::isnan
 #include <limits>  // std::numeric_limit
-#include <climits>
+#include <climits> // INT_MAX, INT_MIN
 #include <sstream>
+#include <cctype> // isdigit
 
 typedef std::numeric_limits<double> dbl;
 typedef std::numeric_limits<float> flt;

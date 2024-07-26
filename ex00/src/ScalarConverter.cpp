@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/16 12:51:47 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:08:26 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void handle_float(std::string input)
 	std::size_t found;
 	std::string suffix_f;
 	std::string suffix_d;
+	// if Boost was allowed, lexicial_cast is an alternative
 	std::ostringstream i_oss;
 	std::string f_input;
 
@@ -128,6 +129,7 @@ void handle_float(std::string input)
 	a = static_cast<char>(i);
 	found = input.find('.');
 	i_oss << i;
+	// the getter/setter
 	f_input = i_oss.str();
 	if (std::isprint(a))
 		std::cout << "char		: " << a << std::endl;
@@ -201,7 +203,6 @@ void handle_double(std::string input)
 		std::cout << "float		: " << static_cast<float>(i) << suffix_f << std::endl
 				  << "double		: " << i << suffix_d << std::endl;
 	}
-	(void)input;
 }
 
 void determine_input(std::string input, double val)
@@ -263,7 +264,7 @@ void detect_type(std::string input, double val)
  * ┕ optionally followed by an exponent part (an e or E character followed by an optional sign and a sequence of digits).
  *
  * float
- * ┕ handle pseudoliterals: -inff, +inff
+ * ┕ handle pseudoliterals: -inff, +inff, nanf
  *
  * double
  * ┕ handle pseudoliterals: -inf, +inf, nan
@@ -290,12 +291,25 @@ void ScalarConverter::convert(std::string input)
 	}
 	else
 	{
-		// check for trailing non-digits
+		// check for trailing non-digits apart from f or before f
 		// c++11 allows input.back()
 		if (endptr != NULL && std::string(endptr).length() != 0 && input[input.length() - 1] != 'f')
 			INVALID_CONVERSION(endptr);
+		else if (endptr != NULL && std::string(endptr).length() != 0 && input[input.length() - 1] == 'f')
+		{
+			std::string tmp = input.substr(0, input.length() - 1);
+			char check = tmp[tmp.length() - 1];
+			if (!isdigit(check) && !std::isnan(res) && !std::isinf(res))
+				INVALID_CONVERSION(endptr);
+			else
+				// allow float-representation
+				detect_type(input, res);
+		}
 		else if (found != std::string::npos)
+		{
+			std::cout << input << std::endl;
 			REJECT_INPUT();
+		}
 		// allow float-representation
 		else
 			detect_type(input, res);
