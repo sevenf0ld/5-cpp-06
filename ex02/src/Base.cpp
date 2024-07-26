@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:33:23 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/18 19:17:22 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/07/26 22:47:39 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void identify(Base &p)
 {
 	IDENTIFICATION("REFERENCE IDENTIFICATION");
 
-	char type;
+	char type = 'X';
 
 	try
 	{
@@ -107,25 +107,32 @@ void identify(Base &p)
 	}
 	catch (std::exception &e)
 	{
+		std::cerr << AC_RED << "Not A. Maybe B?" << AC_NORMAL << std::endl;
+		try
+		{
+			B &ret_b = dynamic_cast<B &>(p);
+			(void)ret_b;
+			type = 'B';
+		}
+		catch (std::exception &er)
+		{
+			std::cerr << AC_RED << "Not B. Perhaps C." << AC_NORMAL << std::endl;
+			try
+			{
+				C &ret_c = dynamic_cast<C &>(p);
+				(void)ret_c;
+				type = 'C';
+			}
+			catch (std::exception &err)
+			{
+				std::cerr << AC_RED << "Not C. That's the end." << AC_NORMAL << std::endl;
+			}
+		}
 	}
-	try
-	{
-		B &ret_b = dynamic_cast<B &>(p);
-		(void)ret_b;
-		type = 'B';
-	}
-	catch (std::exception &e)
-	{
-	}
-	try
-	{
-		C &ret_c = dynamic_cast<C &>(p);
-		(void)ret_c;
-		type = 'C';
-	}
-	catch (std::exception &e)
-	{
-	}
-	std::cout << "base-class p points to derived-class " << type << std::endl
-			  << std::endl;
+	if (type != 'X')
+		std::cout << "base-class p points to derived-class " << type << std::endl
+				  << std::endl;
+	else
+		std::cout << "base-class p is pointing to neither class A, B or C" << std::endl
+				  << std::endl;
 }

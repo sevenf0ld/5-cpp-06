@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:25:35 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/18 19:13:56 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:41:53 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,5 @@
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
-
-Base *generate(void);
-void identify(Base *p);
-void identify(Base &p);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:22:23 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/04/17 13:17:04 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:41:51 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,9 @@ class Base
 public:
 	virtual ~Base();
 };
+
+Base *generate(void);
+void identify(Base *p);
+void identify(Base &p);
 
 #endif
