@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:33:23 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/07/26 22:47:39 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:52:44 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ Base *generate(void)
 			ret = new C();
 			return (ret);
 		}
-		catch (std::bad_alloc &e)
+		catch (const std::bad_alloc &e)
 		{
 			std::cout << e.what() << "\t";
 			NEW_ERR('C');

@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:53:14 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/07/26 19:42:47 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:47:37 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void compare_struct(Data &ref, Data &new_ptr)
 
 void compare_struct(Data *ref, Data *new_ptr)
 {
-	std::cout << AC_YELLOW << ref << "\t`obj`" << AC_NORMAL << std::endl
+	std::cout << AC_YELLOW << ref << "\t`*obj`" << AC_NORMAL << std::endl
 			  << "continent: " << ref->continent << std::endl
 			  << "region: " << ref->region << std::endl
 			  << "country: " << ref->country << std::endl;
@@ -55,7 +55,8 @@ int main(void)
 	compare_struct(obj, ret);
 	std::cout << std::endl;
 
-	std::cout << AC_BOLD << "Modifying data members of `Data *ret`..." << AC_NORMAL << std::endl << std::endl;
+	std::cout << AC_BOLD << "Modifying data members of `Data *ret`..." << AC_NORMAL << std::endl
+			  << std::endl;
 
 	ret->continent = "Australia";
 	ret->region = "Oceania";
@@ -63,7 +64,8 @@ int main(void)
 	compare_struct(obj, ret);
 	std::cout << std::endl;
 
-	std::cout << AC_BOLD << "Modifications to `Data *ret` reflected in `Data obj`, an indication that the retval of `deserialize()` does compare equal to the original pointer passed to it." << AC_NORMAL << std::endl << std::endl;
+	std::cout << AC_BOLD << "Modifications to `Data *ret` reflected in `Data *obj`, an indication that the retval of `deserialize()` does compare equal to the original pointer passed to it." << AC_NORMAL << std::endl
+			  << std::endl;
 
 	delete obj;
 
