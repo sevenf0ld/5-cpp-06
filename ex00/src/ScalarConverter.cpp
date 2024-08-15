@@ -6,7 +6,7 @@
 /*   By: maiman-m <maiman-m@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 09:26:45 by maiman-m          #+#    #+#             */
-/*   Updated: 2024/07/26 17:08:26 by maiman-m         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:16:08 by maiman-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void handle_int(std::string input)
 	else
 		NONDISPLAYABLE();
 	if (j > INT_MAX || j < INT_MIN)
-		OVERFLOW();
+		OVERFLOW_ERR();
 	else
 		std::cout << "int		: " << i << std::endl;
 	std::cout << "float		: " << static_cast<float>(i) << ".0f" << std::endl
